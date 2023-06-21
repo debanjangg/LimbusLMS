@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> {{member.getName}} Activity Log </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <hr>
+        <div class="text-white ps-3">
+            Member ID: {{member.id}} <br>
+            Member Name: {{member.getName}} <br>
+            Phone Number: {{member.phone_no}} <br>
+            Email Address: {% if member.email %}{{ member.email }}{% else %} ----- {% endif %} <br>
+            <hr><h2 class="display-5 ps-2 pe-2 pt-2 pb-2">Member Activity Log</h2><hr>
+            <table class="table ">
+                <th>
+                    <td>Date</td><td>Action Performed</td>
+                </th>
+                <tr>
+                    <td> {{member.memb_since}} </td>
+                    <td> Enrolled as a member.</td>
+                </tr>
+                {% for action in actions  %}
+                <tr>
+                    <td>{{action.0}}</td>
+                    <td>
+                        {% if action.1 == 'issue' %}
+                        Issued the book {{action.2}} (ISBN: {{action.3}}). [Issue ID: {{action.4}}].
+                        {% else %}
+                        Returned the book {{action.2}} (ISBN: {{action.3}}) [Issue ID: {{action.4}}].
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            <hr>
+        </div>
+    </body>
+</html>

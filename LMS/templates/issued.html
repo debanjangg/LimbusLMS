@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}Issued Books{% endblock title %}
+
+{% block body %}
+<h2 class="text-white text-center display-2">Book Issue Module</h2><br>
+<div class="card bg-dark text-white">
+    {% if msg %}
+    <div class="card-header text-bg-danger text-center">
+      {{msg}}
+    </div>
+    {% else %}
+    <div class="card-body bg-dark text-white">
+      <form method="post" autocomplete="off">
+        {% csrf_token %}
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-9 text-center">
+              <table class="table text-center">
+                <thead class="table-dark">
+                  <tr>
+                    <th colspan="2">Issue a book</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="col-4">
+                      <label for="{{ form.member.id_for_label }}" class="form-label text-white">
+                        Member
+                      </label>
+                    </td>
+                    <td class="col-8">{{ form.member }}</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label for="{{ form.book.id_for_label }}" class="form-label text-white">
+                        Book
+                      </label>
+                    </td>
+                    <td>{{ form.book }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <button type="submit" class="btn btn-primary mx-auto">Issue Book</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    {% endif %}
+</div>
+
+<hr class="text-white">
+<div class="bg-transperant text-center">
+  <a href="{% url 'returned_books' %}" class="text-center hover:text-white">
+    <button class="btn bg-success ps-5 pe-5">Returned Books</button>
+  </a>
+</div>
+<hr class="text-white">
+
+<table class="table table-dark table-striped text-white text-center">
+    <tr><th>Issue Id</th><th>Book</th><th>Member</th><th>Issued On</th><th>Due Date</th><th>Returned?</th></tr>
+    {% if issues|length == 0 %}
+    <tr>
+      <td> --- </td>
+      <td> --- </td>
+      <td> --- </td>
+      <td> --- </td>
+      <td> --- </td>
+      <td> --- </td>
+    </tr>
+    {% endif %}
+    {% for issue in issues %}
+        <tr>
+            <td> {{issue.id}} </td>
+            <td> {{issue.book.getName}} </td>
+            <td> {{issue.member.getName}} </td>
+            <td> {{issue.issue_date|date:"F jS, Y"}} </td>
+            <td> {{issue.due_date}} </td>
+            <td><a href="{% url 'return_issued_books' issue.id %}" class="text-center">
+              <button class="btn bg-success mx-auto">Returned</button>
+            </a></td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock body %}

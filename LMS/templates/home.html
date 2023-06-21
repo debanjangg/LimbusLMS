@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Home {% endblock title%}
+
+{% block body %}
+<div id="carouselExampleAutoplaying" class="carousel slide container" data-bs-ride="carousel">
+  <div class="row-md-2"></div>
+  <div class="row-md-8">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{% static 'slideshow/1.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'slideshow/2.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'slideshow/3.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  <div class="row-md-2"></div>
+</div>
+<div class="container mt-3">
+  <span class="display-4 text-white pb-1">Good {{daytime}}!</span>
+  <hr class="text-white">
+  <div class="row">
+    <div class="col-md-4">
+      <a href="{% url 'members' %}" class="text-decoration-none">
+        <div class="card">
+          <div class="card-header" style="background-color: #28a745;">
+            <img src="{% static 'members.png' %}" alt="Members Logo" width="50" height="50" class="float-start me-2">
+            <h5 class="card-title text-white">Members Model</h5>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a href="{% url 'books' %}" class="text-decoration-none">
+        <div class="card">
+          <div class="card-header" style="background-color: #007bff;">
+            <img src="{% static 'book.png' %}" alt="Book Logo" width="50" height="50" class="float-start me-2">
+            <h5 class="card-title text-white">Book Model</h5>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a href="{% url 'issued_books' %}" class="text-decoration-none">
+        <div class="card">
+          <div class="card-header" style="background-color: #dc3545;">
+            <img src="{% static 'bookissue.png' %}" alt="Book Issue Logo" width="50" height="50" class="float-start me-2">
+            <h5 class="card-title text-white">Book Issue Model</h5>
+          </div>
+        </div>
+      </a>
+  </div>
+</div>
+{% endblock body %}
+
+{% block tables %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div style="max-height: 200px; overflow-y: auto;">
+        <table class="table table-dark text-white"  style="max-height: 200px; overflow-y: auto;">
+          <tr>
+            <th>IssueID</th><th>Member</th><th>Book</th><th>Due Date</th>
+          </tr>
+          {% if passed_dues %}
+          {% for issue in passed_dues %}
+          <tr>
+            <td>{{issue.id}}</td>
+            <td>{{issue.member.getName}}</td>
+            <td>{{issue.book.getName}}</td>
+            <td>{{issue.due_date}}</td>
+          </tr>
+          {% endfor %}
+          {% else %}
+          <tr><td colspan=5 class="text-center">No pending returns.</td></tr>
+          {% endif %}
+        </table>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div style="max-height: 200px; overflow-y: auto;">
+        <table class="table table-dark">
+          <tr>
+            <th>IssueID</th><th>Member</th><th>Book</th><th>Due Date</th>
+          </tr>
+          {% if future_dues %}
+          {% for issue in future_dues %}
+          <tr>
+            <td>{{issue.id}}</td>
+            <td>{{issue.member.getName}}</td>
+            <td>{{issue.book.getName}}</td>
+            <td>{{issue.due_date}}</td>
+          </tr>
+          {% endfor %}
+          {% else %}
+          <tr><td colspan=5 class="text-center">No upcoming returns.</td></tr>
+          {% endif %}
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock tables %}

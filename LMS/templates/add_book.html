@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Books{% endblock title %}
+
+{% block body %}
+<h2 class="text-white text-center display-2">Add Books</h2><br>
+<hr class="text-white">
+<div class="justify-content-center text-center">
+  <a href="{% url 'books' %}">
+    <button class="btn btn-info ps-5 pe-5">&minus; List of Books</button>
+  </a>
+</div>
+<hr class="text-white">
+
+<div class="card bg-dark text-white">
+  <div class="card-body bg-dark text-white">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+          <form method="post" autocomplete="off">
+            {% csrf_token %}
+            <table class="table text-center">
+              <thead class="table-dark">
+                <tr>
+                  <th colspan="2">Add a new Author</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="col-4">
+                    <label for="{{ authform.firstName.id_for_label }}" class="form-label text-white">
+                      First Name
+                  </label>
+                  </td>
+                  <td class="col-8">{{ authform.firstName }}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="{{ auth.lastName.id_for_label }}" class="form-label text-white">
+                      Last Name
+                    </label>
+                  </td>
+                  <td>{{ authform.lastName }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary mx-auto">Add Author</button>
+          </form>
+          <hr class="text-white">
+          <form method="post" autocomplete="off">
+            {% csrf_token %}
+            <table class="table text-center">
+              <thead class="table-dark">
+                <tr><th colspan="2">Add a new Publisher</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="col-4">
+                    <label for="{{ pubform.pubName.id_for_label }}" class="form-label text-white">
+                      Publisher Name
+                    </label>
+                  </td>
+                  <td class="col-8">{{ pubform.pubName }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary mx-auto">Add Publisher</button>
+          </form>
+        </div>
+        <div class="col-md-6 text-center">
+          <form method="post" autocomplete="off">
+            {% csrf_token %}
+            <table class="table text-center">
+              <thead class="table-dark">
+                <tr>
+                  <th colspan="2">Add a new Book</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="col-4">
+                    <label for="{{ bookform.isbn.id_for_label }}" class="form-label text-white">
+                      ISBN
+                    </label>
+                  </td>
+                  <td class="col-8">{{ bookform.isbn }}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="{{ bookform.bookName.id_for_label }}" class="form-label text-white">
+                      Book Name
+                    </label>
+                  </td>
+                  <td>{{ bookform.bookName }}</td>
+                </tr>
+                <tr class="text-white">
+                  <td>
+                    <label for="{{ bookform.authors.id_for_label }}" class="form-label text-white control-label">
+                      Authors
+                    </label>
+                  </td>
+                  <td>{{ bookform.authors }}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="{{ bookform.publisher.id_for_label }}" class="form-label text-white">
+                      Publisher Name
+                    </label>
+                  </td>
+                  <td>{{ bookform.publisher }}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="{{ bookform.inventory.id_for_label }}" class="form-label text-white">
+                      Inventory
+                    </label>
+                  </td>
+                  <td>{{ bookform.inventory }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary mx-auto">Add Book</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="text-white">
+
+{% endblock body %}

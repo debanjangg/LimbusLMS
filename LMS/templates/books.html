@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Books{% endblock title %}
+
+{% block body %}
+<h2 class="text-white text-center display-2">Books Module</h2><br>
+<hr class="text-white">
+<div class="justify-content-center text-center">
+    <a href="{% url 'add_book' %}">
+      <button class="btn btn-info ps-5 pe-5">&plus; Add Books</button>
+    </a>
+  </div>
+  <hr class="text-white">
+<hr class="text-white">
+<table class="table table-dark table-striped text-white text-center ps-2 pe-2">
+    <tr><th>ISBN No</th><th>Name</th><th>Authors</th><th>Publisher</th><th>Inventory</th><th>Details</th></tr>
+    {% if books|length == 0 %}
+    <tr>
+      <td> --- </td>
+      <td> --- </td>
+      <td> --- </td>
+      <td> --- </td>
+      <td> --- </td>
+      <td> --- </td>
+    </tr>
+    {% endif %}
+    {% for book in books %}
+        <tr>
+            <td> {{book.isbn}} </td>
+            <td> {{book.getName}} </td>
+            <td> {{book.getAuthors}} </td>
+            <td> {{book.publisher}} </td>
+            <td> {{book.inventory}} </td>
+            <td class="col-1">
+              <a href="{% url 'book_details' book.isbn %}"><button class="btn btn-info">&#8505;</button></a>
+              <a href="{% url 'book_dlt' book.isbn %}"><button class="btn btn-danger">&cross;</button></a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock body %}

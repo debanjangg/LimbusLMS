@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Returned Books{% endblock title %}
+
+{% block body %}
+<h2 class="text-white text-center display-2">Returned Books</h2><br>
+
+<hr class="text-white">
+<div class="bg-transperant text-center">
+  <a href="{% url 'issued_books' %}" class="text-center link-opacity-100-hover">
+    <button class="btn bg-success ps-5 pe-5">Issued Books</button>
+  </a>
+</div>
+<hr class="text-white">
+
+<table class="table table-dark table-striped text-white">
+    <tr><th>Issue Id</th><th>Book</th><th>Member</th><th>Issued On</th><th>Returned On</th></tr>
+    {% if returns|length == 0 %}
+    <tr>
+      <td> --- </td>
+      <td> --- </td>
+      <td> --- </td>
+      <td> --- </td>
+      <td> --- </td>
+    </tr>
+    {% endif %}
+    {% for return in returns %}
+        <tr>
+            <td> {{return.issue_id}} </td>
+            <td> {{return.book}} </td>
+            <td> {{return.member}} ({{return.member_id}}) </td>
+            <td> {{return.issue_date|date:"F jS, Y"}} </td>
+            <td> {{return.returned|date:"F jS, Y"}} </td>
+        </tr>
+    {% endfor %}
+</table>
+<hr class="text-white">
+{% endblock body %}

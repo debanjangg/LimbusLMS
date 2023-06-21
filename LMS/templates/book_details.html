@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ book.getName }} {% endblock title %}
+
+{% block body %}
+<div class="text-white ps-3">
+    ISBN Code: {{book.isbn}} <br>
+    Book Name: {{book.getName}} <br>
+    Book Authors: {{book.getAuthors}} <br>
+    Publisher Name: {{book.publisher}} <br>
+    No of copies with us:
+    <form method="POST" class="form-check-inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger" name="upInv" value="-1">&minus;</button>
+            {{book.inventory}}
+        <button type="submit" class="btn btn-success" name="upInv" value="1">&plus;</button><br>
+    </form>
+    <a href="{% url 'book_dlt' book.isbn %}"><button class="btn btn-danger">Delete</button></a>
+</div>
+{% endblock body %}

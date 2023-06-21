@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Fine - Issue {{issue.id}}{% endblock title %}
+
+{% block body %}
+<div class="container text-white">
+    <div class="row text-center">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <p class="display-2">Delay Fine Payment</p>
+            <hr class="text-white">
+            <p class="text-start">
+                <ul>
+                    <li class="text-start"> Issue ID: {{issue.id}}
+                    <li class="text-start"> Book Issued: {{issue.book.getName}} (ISBN: {{issue.book.isbn}})
+                    <li class="text-start"> Member Name: {{issue.member.getName}}  (ID: {{issue.member.id}})
+                    <li class="text-start"> <b>Fine: &#8377;{{fine}} ({{days}} days)<b>
+                </ul>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="fine_paid" value="1" class="btn btn-success">&#8377;{{fine}} Paid</button>
+                </form>
+            </p>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+{% endblock body %}
+

@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Members{% endblock title %}
+
+{% block body %}
+<h2 class="text-white text-center display-2"> Members Module</h2><br>
+<div class="card bg-dark text-white">
+  {% if msg %}
+  <div class="card-header text-bg-danger text-center">
+    {{msg}}
+  </div>
+  {% endif %}
+  <div class="card-body bg-dark text-white">
+    <form method="post" autocomplete="off">
+      {% csrf_token %}
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-9 text-center">
+            <table class="table text-center">
+              <thead class="table-dark">
+                <tr>
+                  <th colspan="2">Add a new member</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="col-4">
+                    <label for="{{ form.firstName.id_for_label }}" class="form-label text-white">
+                      First Name
+                    </label>
+                  </td>
+                  <td class="col-8">{{ form.firstName }}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="{{ form.lastName.id_for_label }}" class="form-label text-white">
+                      Last Name
+                    </label>
+                  </td>
+                  <td>{{ form.lastName }}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="{{ form.phone_no.id_for_label }}" class="form-label text-white">
+                      Phone Number
+                    </label>
+                  </td>
+                  <td>{{ form.phone_no }}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="{{ form.email.id_for_label }}" class="form-label text-white">
+                      Email
+                    </label>
+                  </td>
+                  <td>{{ form.email }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary mx-auto">Add Member</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<hr class="text-white">
+<table class="table table-dark table-striped text-white text-center">
+    <tr><th>Member Id</th><th>Name</th><th>Phone Number</th><th>E-Mail</th><th>Member since</th><th>Delete?</th></tr>
+    {% if members|length == 0 %}
+    <tr>
+      <td> --- </td>
+      <td> --- </td>
+      <td> --- </td>
+      <td> --- </td>
+      <td> --- </td>
+      <td> --- </td>
+      <td> --- </td>
+    </tr>
+    {% endif %}
+    {% for member in members %}
+        <tr>
+            <td> {{member.id}} </td>
+            <td> {{member.firstName | title}} {{member.lastName | title}} </td>
+            <td> {{member.phone_no}} </td>
+            <td> {{member.email|default_if_none:"---"}} </td>
+            <td> {{member.memb_since|date:"F jS, Y"}} </td>
+            <td>
+              <a href="{% url 'mem_log' member.id %}"><button class="btn btn-info ps-3 pe-3">&#x2193;</button>
+              <a href="{% url 'mem_dlt' member.id %}"><button class="btn btn-danger">&cross;</button></a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock body %}
